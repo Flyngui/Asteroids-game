@@ -1,3 +1,4 @@
+import sys
 import pygame
 from constants import *
 from player import Player
@@ -5,7 +6,6 @@ from asteroids import Asteroid
 from asteroidfield import AsteroidField
 
 def main():
-    print("Starting Asteroids!\nScreen width: 1280\nScreen height: 720")
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
@@ -23,6 +23,10 @@ def main():
             if event.type == pygame.QUIT:
                 return
         updatable.update(dt)
+        for meteor in asteroids:
+            if meteor.collides_with(player):
+                print("Game over!")
+                sys.exit()
         pygame.Surface.fill(screen, "#000000")
         for object in drawable:
             object.draw(screen)
